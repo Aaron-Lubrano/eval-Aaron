@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mercedes‑AMG One — présentation</title>
+  <meta name="description" content="Mercedes‑AMG One — supercar hybride, fiche technique, galerie et réservation." />
+
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#0f1720;
+      --muted:#98a0aa;
+      --accent:#e10600;
+      --glass: rgba(255,255,255,0.04);
+      --radius:14px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.65)),
+        radial-gradient(1200px 600px at 10% 10%, rgba(225,16,0,0.06), transparent 10%),
+        var(--bg);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+    a{color:inherit;text-decoration:none}
+    header{
+      position:sticky; top:12px; z-index:40;
+      display:flex; gap:18px; align-items:center;
+      justify-content:space-between;
+      padding:12px 20px;
+      margin:0 18px;
+      backdrop-filter: blur(8px) saturate(1.1);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:999px;
+      box-shadow: 0 6px 24px rgba(2,6,23,0.6);
+    }
+    .logo{
+      display:flex; gap:12px; align-items:center; font-weight:700;
+      letter-spacing:0.6px; font-size:16px;
+    }
+    .logo .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px rgba(225,16,0,0.5)}
+    nav{display:flex; gap:10px; align-items:center}
+    nav a{padding:8px 12px;border-radius:10px;color:var(--muted);font-size:14px}
+    nav a:hover{background:var(--glass); color:#fff}
+    .btn{
+      display:inline-flex; gap:8px; align-items:center;
+      background:linear-gradient(90deg,var(--accent), #ff6a6a);
+      color:white;padding:10px 14px;border-radius:10px;font-weight:600;
+      box-shadow: 0 8px 30px rgba(225,16,0,0.18);
+      border:0;cursor:pointer;
+    }
+
+    /* HERO */
+    .hero{
+      display:grid;
+      grid-template-columns: 1fr min(780px, 46%);
+      gap:42px;
+      align-items:center;
+      padding:56px 3.5vw;
+      max-width:1300px;margin:28px auto;
+    }
+    .hero-left{
+      max-width:680px;
+      padding:28px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
+      border-radius:var(--radius);
+      box-shadow: 0 12px 40px rgba(2,6,23,0.6);
+    }
+    .kicker{color:var(--accent); font-weight:700;letter-spacing:1px;font-size:13px}
+    h1{font-size: clamp(28px, 4.6vw, 44px); margin:10px 0 8px; line-height:1.02}
+    p.lead{color:var(--muted);margin:8px 0 18px;font-size:16px}
+    .specs-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+    .spec{
+      background:rgba(255,255,255,0.02);
+      padding:12px 14px;border-radius:10px;min-width:120px;
+      text-align:center;font-weight:600;color:#fff
+    }
+    .spec small{display:block;color:var(--muted);font-weight:500;font-size:13px;margin-top:6px}
+
+    /* CAR CARD (right) */
+    .car-card{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:18px;border-radius:18px;box-shadow: 0 12px 40px rgba(2,6,23,0.5);
+      display:flex;flex-direction:column;gap:12px;align-items:center;
+    }
+    .car-image{
+      width:100%;border-radius:12px;overflow:hidden;position:relative;
+      background:linear-gradient(90deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2));
+      aspect-ratio: 16/9; display:flex; align-items:center; justify-content:center;
+    }
+    .car-image img{width:100%;height:100%;object-fit:cover;display:block}
+
+    .price{font-size:20px;font-weight:800;color:#fff}
+    .muted{color:var(--muted);font-size:14px}
+
+    /* sections */
+    section{max-width:1100px;margin:28px auto;padding:18px 20px}
+    .grid{display:grid;grid-template-columns: repeat(2,1fr);gap:18px}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-radius:14px;padding:18px;box-shadow: 0 8px 30px rgba(2,6,23,0.45);
+    }
+
+    /* gallery */
+    .gallery{display:grid;grid-template-columns: repeat(auto-fit,minmax(220px,1fr));gap:12px}
+    .thumb{position:relative;overflow:hidden;border-radius:10px;cursor:pointer}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1);transition:transform .6s cubic-bezier(.2,.9,.25,1)}
+    .thumb:hover img{transform:scale(1.06)}
+
+    /* lightbox */
+    .lightbox{
+      position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+      background:rgba(2,6,23,0.8);z-index:200;padding:28px;
+    }
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:92%;max-height:86%;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.7)}
+
+    /* form */
+    form{display:flex;flex-direction:column;gap:10px}
+    label{font-size:13px;color:var(--muted)}
+    input,textarea,select{
+      background:transparent;border:1px solid rgba(255,255,255,0.06);padding:12px;border-radius:10px;color:inherit;
+      outline:none;font-size:15px;
+    }
+    input:focus,textarea:focus,select:focus{box-shadow:0 6px 30px rgba(225,16,0,0.08);border-color:rgba(255,255,255,0.12)}
+    .row{display:flex;gap:10px}
+    .row > *{flex:1}
+
+    footer{padding:22px;text-align:center;color:var(--muted);font-size:14px}
+
+    /* responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;gap:18px;padding:36px 4vw}
+      nav{display:none}
+    }
+
+    /* subtle entrance */
+    .fade-in{opacity:0;transform:translateY(6px);animation:enter .9s cubic-bezier(.2,.9,.25,1) forwards}
+    .stagger-1{animation-delay:.08s}
+    .stagger-2{animation-delay:.18s}
+    .stagger-3{animation-delay:.28s}
+    @keyframes enter{to{opacity:1;transform:none}}
+
+    /* accessibility helpers */
+    .sr-only{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+  </style>
+</head>
+<body>
+  <header class="fade-in">
+    <div class="logo" aria-label="logo Mercedes AMG One">
+      <span class="dot" aria-hidden="true"></span>
+      <div>
+        AMG One<span style="color:var(--muted);font-weight:600;margin-left:8px;font-size:13px">Présentation</span>
+      </div>
+    </div>
+
+    <nav aria-label="Navigation principale">
+      <a href="#specs">Fiche</a>
+      <a href="#gallery">Galerie</a>
+      <a href="#contact">Réserver</a>
+    </nav>
+
+    <button class="btn" id="bookNow">Réserver</button>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="title-hero">
+      <div class="hero-left fade-in stagger-1">
+        <div class="kicker">Hypercar hybride</div>
+        <h1 id="title-hero">Mercedes‑AMG One — la technologie de F1 sur route</h1>
+        <p class="lead">Puissance incroyable, aérodynamique active et un V6 turbo hybride dérivé de la Formule 1 : l'AMG One est le pont entre la piste et la route. Un objet pour les passionnés et les collectionneurs.</p>
+
+        <div class="specs-row">
+          <div class="spec"><div style="font-size:18px">1 070 ch</div><small>Puissance combinée</small></div>
+          <div class="spec"><div style="font-size:18px">350+ km/h</div><small>Vitesse max</small></div>
+          <div class="spec"><div style="font-size:18px">2,9 s</div><small>0 → 100 km/h</small></div>
+        </div>
+
+        <div style="margin-top:18px;display:flex;gap:12px;align-items:center">
+          <button class="btn" id="cta-details">En savoir plus</button>
+          <a href="#gallery" style="color:var(--muted);font-weight:600">Voir la galerie →</a>
+        </div>
+      </div>
+
+      <aside class="car-card fade-in stagger-2" aria-label="Carte voiture">
+        <div class="car-image" aria-hidden="false">
+          <!-- Remplace l'image ci‑dessous par une vraie photo de Mercedes AMG One -->
+          <img src="https://images.unsplash.com/photo-1571607383806-7e6b0d1ee6fb?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=PLACEHOLDER" alt="Mercedes AMG One (remplacez par une photo réelle)" onerror="this.style.display='none'">
+          <!-- Si l'image externe ne charge pas nous affichons un SVG -->
+          <svg id="svg-placeholder" width="100%" height="100%" viewBox="0 0 1400 600" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+            <defs>
+              <linearGradient id="g" x1="0" x2="1">
+                <stop offset="0" stop-color="#0f1720" stop-opacity="0.4"/>
+                <stop offset="1" stop-color="#04060a" stop-opacity="0.2"/>
+              </linearGradient>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#g)"/>
+            <g transform="translate(50,60)" fill="none" stroke="#e6eef6" stroke-opacity="0.07" stroke-width="18">
+              <path d="M40 340 C 180 220, 420 160, 700 160 C 980 160, 1200 260, 1300 300 L 1300 360 L40 360 Z" />
+            </g>
+            <text x="50" y="520" fill="rgba(255,255,255,0.06)" font-family="Inter, Arial" font-size="20">Image : remplacez par une photo de la Mercedes‑AMG One</text>
+          </svg>
+        </div>
+
+        <div style="width:100%;display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="price">~ 2 300 000 €</div>
+            <div class="muted">Édition limitée</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:13px;color:var(--muted)">Moteur</div>
+            <div style="font-weight:700">V6 + hybrides</div>
+          </div>
+        </div>
+
+      </aside>
+    </section>
+
+    <section id="specs" class="fade-in stagger-3" aria-labelledby="specs-title">
+      <h2 id="specs-title">Fiche technique</h2>
+      <div class="grid" style="margin-top:12px">
+        <div class="card">
+          <h3>Performance</h3>
+          <ul style="margin:10px 0 0; padding-left:1rem; color:var(--muted)">
+            <li>Puissance combinée : <strong>1 070 ch</strong></li>
+            <li>0‑100 km/h : <strong>≈ 2,9 s</strong></li>
+            <li>Vitesse max : <strong>350+ km/h</strong></li>
+            <li>Transmission : <strong>RWD / systèmes hybrides</strong></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Technique & châssis</h3>
+          <ul style="margin:10px 0 0; padding-left:1rem; color:var(--muted)">
+            <li>Moteur central : <strong>V6 turbo dérivé F1</strong></li>
+            <li>Multiples moteurs électriques d'appui</li>
+            <li>Aérodynamique active et éléments en carbone</li>
+            <li>Poids optimisé pour la piste</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="fade-in" aria-labelledby="gallery-title">
+      <h2 id="gallery-title">Galerie</h2>
+      <div class="gallery" style="margin-top:12px">
+        <!-- Thumbs : remplace ces src par des photos réelles -->
+        <div class="thumb" tabindex="0" data-src="https://cdni.autocarindia.com/Utils/ImageResizer.ashx?n=https://cdni.autocarindia.com/Galleries/20220601121400_Mercedes_AMG%20One%20side%20profile.jpg&w=736&h=488&q=75&c=1">
+          <img alt="AMG One vue latérale" src="https://cdni.autocarindia.com/Utils/ImageResizer.ashx?n=https://cdni.autocarindia.com/Galleries/20220601121400_Mercedes_AMG%20One%20side%20profile.jpg&w=736&h=488&q=75&c=1">
+        </div>
+        <div class="thumb" tabindex="0" data-src="https://tse1.mm.bing.net/th/id/OIP.4Rj27P3xfitOSorc9FH0HgHaE5?pid=ImgDet&w=474&h=313&rs=1&o=7&rm=3">
+          <img alt="AMG One - face avant" src="https://tse4.mm.bing.net/th/id/OIP.400QhDEftFDmP-a4v2vY0QHaER?pid=ImgDet&w=474&h=273&rs=1&o=7&rm=3">
+        </div>
+        <div class="thumb" tabindex="0" data-src="https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2022/05/31/16540200695370.jpg">
+          <img alt="AMG One - intérieur" src="https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2022/05/31/16540200695370.jpg">
+        </div>
+        <div class="thumb" tabindex="0" data-src="https://i.redd.it/yhbl759petr11.jpg">
+          <img alt="AMG One - détail" src="https://i.redd.it/yhbl759petr11.jpg">
+        </div>
+      </div>
+    </section>
+
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Visionneuse d'images">
+      <button id="lbClose" aria-label="Fermer" style="position:absolute;top:18px;right:18px;background:transparent;border:0;color:#fff;font-size:20px">✕</button>
+      <img id="lbImg" alt="">
+    </div>
+
+    <section id="contact" class="fade-in">
+      <h2>Réservation / Contact</h2>
+      <div class="grid" style="margin-top:12px">
+        <div class="card">
+          <form id="contactForm" aria-labelledby="contactFormTitle">
+            <div id="contactFormTitle" class="sr-only">Formulaire de réservation</div>
+            <label for="name">Nom complet</label>
+            <input id="name" name="name" type="text" placeholder="Jean Dupont" required>
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="JeanDupont@exemple.com" required>
+
+            <div class="row">
+              <div>
+                <label for="phone">Téléphone</label>
+                <input id="phone" name="phone" type="tel" placeholder="+33 6 12 34 56 78">
+              </div>
+              <div>
+                <label for="when">Date souhaitée</label>
+                <input id="when" name="when" type="date">
+              </div>
+            </div>
+
+            <label for="message">Message / demandes particulières</label>
+            <textarea id="message" name="message" rows="4" placeholder="Essai sur piste, logistique, ..."></textarea>
+
+            <button type="submit" class="btn" style="margin-top:8px">Envoyer la demande</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>Pourquoi l'AMG One?</h3>
+          <p style="color:var(--muted)">Combinaison rare d’ingénierie F1 et d’utilisabilité sur route. Idéale pour les collectionneurs, les événements VIP et les sessions sur circuit.</p>
+
+          <h4 style="margin-top:14px">Données & sécurité</h4>
+          <p style="color:var(--muted)">Nous ne partageons pas vos informations. Ce formulaire est un exemple — connecte-le à ton backend (API / e‑mail) pour recevoir les demandes.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © <span id="year"></span> Mercedes‑AMG One — Présentation (mockup). Photos : remplacez par sources officielles.
+  </footer>
+
+  <script>
+    // small utility
+    const $ = (sel, ctx=document) => ctx.querySelector(sel);
+    const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+    // CTA buttons
+    $('#cta-details').addEventListener('click', ()=> document.getElementById('specs').scrollIntoView({behavior:'smooth'}));
+    $('#bookNow').addEventListener('click', ()=> document.getElementById('contact').scrollIntoView({behavior:'smooth'}));
+
+    // gallery -> lightbox
+    const thumbs = $$('.thumb');
+    const lightbox = $('#lightbox');
+    const lbImg = $('#lbImg');
+    const lbClose = $('#lbClose');
+
+    thumbs.forEach(t=>{
+      const src = t.dataset.src || t.querySelector('img')?.src;
+      t.addEventListener('click', ()=> openLB(src));
+      t.addEventListener('keydown', (e)=> { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLB(src); }});
+    });
+
+    function openLB(src){
+      lbImg.src = src;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLB(){
+      lbImg.src = '';
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    lbClose.addEventListener('click', closeLB);
+    lightbox.addEventListener('click', (e)=> { if(e.target === lightbox) closeLB(); });
+    document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') closeLB(); });
+
+    // simple form handling (example only)
+    const form = $('#contactForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim(),
+        when: form.when.value,
+        message: form.message.value.trim()
+      };
+      // Basic validation
+      if(!data.name || !data.email){
+        alert('Merci de renseigner au minimum votre nom et votre email.');
+        return;
+      }
+      // In this mockup we just show a confirmation. Connect to your backend here.
+      alert('Merci, votre demande a été enregistrée (mockup). Nous vous contacterons via ' + data.email);
+      form.reset();
+    });
+
+    // progressive fade-in for elements already marked
+    window.addEventListener('load', ()=> {
+      document.querySelectorAll('.fade-in').forEach(el => {
+        el.style.opacity = 0;
+        // allow CSS animation to handle it (classes already include animation)
+      });
+    });
+  </script>
+</body>
+</html>
